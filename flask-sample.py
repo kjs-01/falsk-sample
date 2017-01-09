@@ -1,4 +1,4 @@
-from flask import Flask, url_for
+from flask import Flask, url_for, render_template
 
 app = Flask(__name__)
 
@@ -12,8 +12,10 @@ def login():
     return 'login page'
 
 @app.route('/hello')
-def hello_world():
-    return 'Hello World!'
+@app.route('/hello/<name>')
+def hello_world(name=None):
+    # return 'Hello World!'
+    return render_template('hello.html', name=name)
 
 @app.route('/user/<username>')
 def user(username):
@@ -36,6 +38,7 @@ with app.test_request_context():
     print(url_for('hello_world'))
     print(url_for('user', username='John Doe'))
     print(url_for('login', next='/'))
+    print(url_for('static', filename='style.css'))
 
 
 if __name__ == '__main__':
